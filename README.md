@@ -2,11 +2,11 @@
 
 Simulador simples utilizado na disciplina de inteligência artificial.
 
-![Screenshot](/robo1.png)
+![Screenshot](/Robo1.png)
 
-![Screenshot](/robot2.png)
+![Screenshot](/Robo2.png)
 
-![Screenshot](/robot3.png)
+![Screenshot](/Robo3.png)
 
 Para executar a versão em 3D:
 
@@ -21,7 +21,7 @@ Simulacao_robo_tkinter.py
 
 ## Dependências:
 
-É necessário instalar o pacote pyopengl e freeglut3
+É necessário instalar o pacote pyopengl e a biblioteca freeglut3.
 
 No linux:
 ```bash
