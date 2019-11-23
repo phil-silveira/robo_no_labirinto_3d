@@ -2,11 +2,11 @@
 
 Simulador simples utilizado na disciplina de inteligência artificial.
 
-![Screenshot](/Robo1.png)
+![Screenshot](/img/Robo1.png)
 
-![Screenshot](/Robo2.png)
+![Screenshot](/img/Robo2.png)
 
-![Screenshot](/Robo3.png)
+![Screenshot](/img/Robo3.png)
 
 Para executar a versão em 3D:
 
