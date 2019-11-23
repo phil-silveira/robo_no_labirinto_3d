@@ -2,7 +2,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from OpenGL.GL import *
 
-from Nucleo_simulacao import *
+from nucleo_simulacao import *
 
 
 class Gui:

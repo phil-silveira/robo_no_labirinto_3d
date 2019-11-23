@@ -1,5 +1,5 @@
 import random
-from Direcoes import Direcoes
+from direcoes import Direcoes
 
 
 def setup(self):
@@ -66,16 +66,16 @@ def loop(self):
     if self.estado == self.Estados.PARA:
         if self.aberto_adiante():  # se estiver aberto a frente do robo...
             self.lista_de_comandos.append(self.Estados.ANDA1)  # anda 1 celula no mapa
-        elif self.aberto_direita():  # se estiver fechado na frente e aberto a direita...
-            self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)  # gira para a direita
-            self.lista_de_comandos.append(self.Estados.ANDA1)  # anda 1 celula no mapa
-        elif self.aberto_esquerda():  # se estiver fechado a frente, a direita e aberto a esquerda
-            self.lista_de_comandos.append(self.Estados.GIRA_ESQUERDA)  # gira para a esquerda
-            self.lista_de_comandos.append(self.Estados.ANDA1)  # anda 1 celula
-        else:  # volta para onde veio
-            self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-            self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-            self.lista_de_comandos.append(self.Estados.ANDA1)
+        # elif self.aberto_direita():  # se estiver fechado na frente e aberto a direita...
+        #     self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)  # gira para a direita
+        #     self.lista_de_comandos.append(self.Estados.ANDA1)  # anda 1 celula no mapa
+        # elif self.aberto_esquerda():  # se estiver fechado a frente, a direita e aberto a esquerda
+        #     self.lista_de_comandos.append(self.Estados.GIRA_ESQUERDA)  # gira para a esquerda
+        #     self.lista_de_comandos.append(self.Estados.ANDA1)  # anda 1 celula
+        # else:  # volta para onde veio
+        #     self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
+        #     self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
+        #     self.lista_de_comandos.append(self.Estados.ANDA1)
 
     # print(self.variavel)
     

@@ -3,7 +3,8 @@
 import math 
 import enum
 import random
-from Direcoes import Direcoes
+from direcoes import Direcoes
+import algoritmo_de_movimentacao
 
 
 class SensorDistancia:
@@ -235,7 +236,6 @@ class Robo:
             vel_motor_direita , vel_motor_esquerda: utilizadas na dinamica do robo
     
     """
-    import Simple
 
     class Params:
         VELOCIDADE_MAXIMA_MOTOR = 2
@@ -260,7 +260,8 @@ class Robo:
         self.mapa.inicializa()
 
         self.lista_de_comandos = []
-        self.Simple.setup(self)
+        self.algoritmo_de_movimentacao = algoritmo_de_movimentacao
+        self.algoritmo_de_movimentacao.setup(self)
 
         self.estado = self.Estados.PARA
         self.contagem = 0
@@ -404,7 +405,7 @@ class Robo:
 
         if self.estado == self.Estados.PARA:
             self.avanca_sequencia_de_comandos()
-            self.Simple.loop(self)
+            self.algoritmo_de_movimentacao.loop(self)
 
     def avanca_sequencia_de_comandos(self):
         #self.mostra_estado()

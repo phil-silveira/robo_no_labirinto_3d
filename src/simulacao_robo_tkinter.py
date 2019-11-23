@@ -1,6 +1,6 @@
 from tkinter import *
 
-from Nucleo_simulacao import *
+from nucleo_simulacao import *
 
 
 class Gui:

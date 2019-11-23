@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import math
-from Robo import *
+from robo import *
 
 
 class NucleoSimulacao:
