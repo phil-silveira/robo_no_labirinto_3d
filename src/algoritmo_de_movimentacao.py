@@ -61,22 +61,27 @@ def loop(self):
                self.lista_de_comandos.append(self.Estados.ANDA1)
     """
 
+    '''
+        Mapeamento em duas etapas:
+        - etapa 1: costear o mapa pela direita até delimitar sua margem
+        - etapa 2: percorrer as regiaos do mapa ainda desconhecidas. como ????        
+    '''
 
-    ## Exemplo de algoritmo basico de movimento
+
+    # Etapa 1 - costear o mapa pela direita até delimitar sua margem
     if self.estado == self.Estados.PARA:
-        if self.aberto_adiante():  # se estiver aberto a frente do robo...
-            self.lista_de_comandos.append(self.Estados.ANDA1)  # anda 1 celula no mapa
-        # elif self.aberto_direita():  # se estiver fechado na frente e aberto a direita...
-        #     self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)  # gira para a direita
-        #     self.lista_de_comandos.append(self.Estados.ANDA1)  # anda 1 celula no mapa
-        # elif self.aberto_esquerda():  # se estiver fechado a frente, a direita e aberto a esquerda
-        #     self.lista_de_comandos.append(self.Estados.GIRA_ESQUERDA)  # gira para a esquerda
-        #     self.lista_de_comandos.append(self.Estados.ANDA1)  # anda 1 celula
-        # else:  # volta para onde veio
-        #     self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-        #     self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-        #     self.lista_de_comandos.append(self.Estados.ANDA1)
+        if self.aberto_direita():
+            self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
+            self.lista_de_comandos.append(self.Estados.ANDA1)
+        
+        elif self.aberto_adiante():
+            self.lista_de_comandos.append(self.Estados.ANDA1)
 
-    # print(self.variavel)
-    
-
+        elif self.aberto_esquerda():
+            self.lista_de_comandos.append(self.Estados.GIRA_ESQUERDA)
+            self.lista_de_comandos.append(self.Estados.ANDA1)
+        else:
+            self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
+            self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
+            self.lista_de_comandos.append(self.Estados.ANDA1)
+            
