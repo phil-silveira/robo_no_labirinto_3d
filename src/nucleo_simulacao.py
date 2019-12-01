@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import math
-from robo import *
+from robo import Robo
+from mapa import Mapa
 
 
 class NucleoSimulacao:
@@ -32,16 +33,10 @@ class NucleoSimulacao:
             self.ligado = False
 
     def troca_mapa(self):
-        if self.tipo_mapa == 0:
-            self.tipo_mapa = 1
-        elif self.tipo_mapa == 1:
-            self.tipo_mapa = 2
-        elif self.tipo_mapa == 2:
-            self.tipo_mapa = 3
-        elif self.tipo_mapa == 3:
-            self.tipo_mapa = 4
-        elif self.tipo_mapa == 4:
-            self.tipo_mapa = 0
+        NUM_MAPS = 5
+
+        self.tipo_mapa = (self.tipo_mapa + 1) % NUM_MAPS
+
         self.monta_simulacao()
 
     def troca_modo(self):
@@ -51,17 +46,11 @@ class NucleoSimulacao:
             self.robo.ideal = True
 
     def troca_exibicao_sensores(self):
-        if self.mostra_sensores:
-            self.mostra_sensores = False
-        else:
-            self.mostra_sensores = True
+        self.mostra_sensores = not self.mostra_sensores
 
     def troca_exibicao_grid(self):
-        if self.mostra_celulas:
-            self.mostra_celulas = False
-        else:
-            self.mostra_celulas = True
-
+        self.mostra_celulas = not self.mostra_celulas
+        
     def monta_simulacao(self):
         self.robo = None
 
