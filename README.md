@@ -3,12 +3,12 @@
 ## Sumários
 
 - [Configuração inicial](#configuração-inicial)
+- [Dependências](#dependências)
 - [Simulação 2D](#simulação-2d)
 - [Simulação 3D](#simulação-3d)
 - [Mapa](#mapa)
 - [Navegação](#navegação)
 - [Comandos](#comandos)
-- [Dependências](#dependências)
 
 ## Configuração inicial
 
@@ -16,6 +16,16 @@ Abrir um terminal no diretório raiz do projeto e executar os seguintes comandos
 ```bash
     make setup
     source ./venv/bin/activate
+```
+
+## Dependências:
+
+É necessário instalar o pacote pyopengl e a biblioteca freeglut3.
+
+No linux:
+```bash
+    pip install pyopengl
+    sudo apt install freeglut3-dev
 ```
 
 ## Simulação 2D
@@ -37,7 +47,7 @@ __Celulas__: mostra as celulas para as quais o labirinto é abstraido.
 
 Para iniciar a simulação, basta abrir um terminal do diretório raiz do projeto e executar o comando `make run-3d-simulation`.
 
-![Screenshot](/img/Robo1.png)
+![Screenshot](/img/simulacao-3d.png)
 
 ### Controles da interface 3D:
 
@@ -76,15 +86,3 @@ __ANDA__: anda ate atingir uma parede;\
 __PARA__: permanece na mesma célula.\
 \
 No arquivo `algoritmo_de_movimentacao.py` há um exemplo de como utilizar os comandos.
-
-
-## Dependências:
-
-É necessário instalar o pacote pyopengl e a biblioteca freeglut3.
-
-No linux:
-```bash
-pip install pyopengl
-sudo apt-get install freeglut3-dev
-```
-
