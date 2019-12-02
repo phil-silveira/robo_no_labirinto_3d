@@ -60,7 +60,7 @@ class Robo:
         self.referencia_figura = None
 
         self.ideal = True
-
+    
     def mostra_direcao(self):
         if self.direcao == Direcoes.NORTE:
             print("NORTE")
@@ -212,82 +212,70 @@ class Robo:
         #self.mostra_estado()
 
     def aberto_direita(self):
+        celula_atual = self.mapa.celula_atual()
+
         if self.direcao == Direcoes.OESTE:
-            celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_norte:
                 return True
-            else:
-                return False
+
         if self.direcao == Direcoes.LESTE:
-            celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_sul:
                 return True
-            else:
-                return False
+
         if self.direcao == Direcoes.NORTE:
-            celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_leste:
                 return True
-            else:
-                return False
+
         if self.direcao == Direcoes.SUL:
-            celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_oeste:
                 return True
-            else:
-                return False
+        
+        return False        
 
     def aberto_esquerda(self):
+        celula_atual = self.mapa.celula_atual()
+        
         if self.direcao == Direcoes.OESTE:
-            celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_sul:
                 return True
-            else:
-                return False
+        
         if self.direcao == Direcoes.LESTE:
             celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_norte:
                 return True
-            else:
-                return False
+        
         if self.direcao == Direcoes.NORTE:
             celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_oeste:
                 return True
-            else:
-                return False
+        
         if self.direcao == Direcoes.SUL:
             celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_leste:
                 return True
-            else:
-                return False
+        
+        return False
 
     def aberto_adiante(self):
-        if self.direcao == Direcoes.OESTE:
-            celula_atual = self.mapa.celula_atual()
+        celula_atual = self.mapa.celula_atual()
+
+        if self.direcao == Direcoes.OESTE:   
             if celula_atual.aberto_oeste:
                 return True
-            else:
-                return False
+
         if self.direcao == Direcoes.LESTE:
-            celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_leste:
                 return True
-            else:
-                return False
+
         if self.direcao == Direcoes.NORTE:
-            celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_norte:
                 return True
-            else:
-                return False
+
         if self.direcao == Direcoes.SUL:
-            celula_atual = self.mapa.celula_atual()
             if celula_atual.aberto_sul:
                 return True
-            else:
-                return False
+
+        return False
 
     def controle(self):
         """
