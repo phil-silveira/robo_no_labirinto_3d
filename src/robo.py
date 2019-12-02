@@ -49,7 +49,6 @@ class Robo:
         self.contagem = 0
 
         self.sensores_distancia = []
-
         self.sensores_distancia.append(SensorDistancia(raio, 0, 0))  # sensor frontal
         self.sensores_distancia.append(SensorDistancia(0, raio, math.pi / 2))  # sensor esquerdo
         self.sensores_distancia.append(SensorDistancia(0, -raio, -math.pi / 2))  # sensor direito
