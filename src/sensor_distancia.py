@@ -1,8 +1,8 @@
-import math 
+import math
 
 
 class SensorDistancia:
-    DISTANCIA_MAXIMA: int = 300
+    DISTANCIA_MAXIMA = 300
 
     def __init__(self, x, y, angulo):
         # valores relativos em relacao ao robo
@@ -27,7 +27,7 @@ class SensorDistancia:
 
         Realiza uma varredura iniciando em x,y (coordenadas absolutas do sensor).
         O angulo da varredura eh o angulo absoluto do sensor (soma do angulo do robo com o angulo relativo do sensor).
-        """   
+        """
         x1 = obstaculo[0]
         y1 = obstaculo[1]
         x2 = obstaculo[2]
@@ -36,8 +36,10 @@ class SensorDistancia:
         self.coord_y_ini_varredura = coord_y_absoluta
         # a varredura eh realizada sempre ate o obstaculo mais proximo ja encontrado
         for progressao in range(0, self.distancia):
-            coord_x_varredura = coord_x_absoluta + progressao * math.cos(angulo_absoluto)
-            coord_y_varredura = coord_y_absoluta + progressao * math.sin(angulo_absoluto)
+            coord_x_varredura = coord_x_absoluta + \
+                progressao * math.cos(angulo_absoluto)
+            coord_y_varredura = coord_y_absoluta + \
+                progressao * math.sin(angulo_absoluto)
             self.coord_x_fim_varredura = coord_x_varredura
             self.coord_y_fim_varredura = coord_y_varredura
             # verifica se o ponto esta dentro do objeto
@@ -46,5 +48,7 @@ class SensorDistancia:
                 if self.distancia > progressao:
                     self.distancia = progressao
                 break
-        self.coord_x_alvo = self.coord_x_relativa + self.distancia * math.cos(self.angulo_relativo)
-        self.coord_y_alvo = self.coord_y_relativa + self.distancia * math.sin(self.angulo_relativo)
+        self.coord_x_alvo = self.coord_x_relativa + \
+            self.distancia * math.cos(self.angulo_relativo)
+        self.coord_y_alvo = self.coord_y_relativa + \
+            self.distancia * math.sin(self.angulo_relativo)
