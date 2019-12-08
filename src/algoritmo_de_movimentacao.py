@@ -1,6 +1,12 @@
 import random
 from direcoes import Direcoes
+from enum import Enum 
 
+
+class MazeMappingState(Enum):
+    IDLE = 'IDLE'
+    GET_AROUND_MAZE_BY_RIGHT = 'GET_AROUND_MAZE_BY_RIGHT'
+    EXPLORE_UNKONWN_POSITIONS = 'EXPLORE_UNKONWN_POSITIONS'
 
 def setup(self):
     """
@@ -12,10 +18,7 @@ def setup(self):
 
     # variaveis auxiliares
     self._initial_position = self.mapa.celula_atual()
-    self._already_round_maze = None
-    self._is_step_1_completed = None
-    self._is_step_2_completed = None
-    self._already_round_maze = None
+    self.maze_mapping_state = MazeMappingState.GET_AROUND_MAZE_BY_RIGHT
 
 
 def loop(self):
@@ -26,96 +29,87 @@ def loop(self):
     '''
 
     if self.estado == self.Estados.PARA:
-        if self._initial_position == self.mapa.celula_atual():
-            if not self._is_step_1_completed:
-                self._is_step_1_completed = True
-                self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-                self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-                self.lista_de_comandos.append(self.Estados.ANDA1)
-            else:
-                print('ETAPA 1 = concluida')
+        #
+        # State machine
+        #
+        if self.maze_mapping_state == MazeMappingState.IDLE:
+            self.maze_mapping_state = MazeMappingState.GET_AROUND_MAZE_BY_RIGHT
 
-        # Etapa 1 - costear o mapa pela direita até delimitar sua margem
-        if not self._is_step_1_completed:
+        elif self.maze_mapping_state == MazeMappingState.GET_AROUND_MAZE_BY_RIGHT and self._initial_position == self.mapa.celula_atual():
+            self.maze_mapping_state = MazeMappingState.EXPLORE_UNKONWN_POSITIONS
+
+            print(f'*** {MazeMappingState.GET_AROUND_MAZE_BY_RIGHT.value}(COMPLETED)')
+
+
+        #
+        #  Control
+        # 
+        if self.maze_mapping_state == MazeMappingState.GET_AROUND_MAZE_BY_RIGHT:
             get_around_the_maze_by_the_right(self)
 
-        # # Etapa 2 - andar por regiões desconhecidas
-        elif not self._is_step_2_completed:
-            explore_unknown_position(self)
-
-        else:
-            keep_spinning(self)
+        elif self.maze_mapping_state == MazeMappingState.EXPLORE_UNKONWN_POSITIONS:
+            explore_unknown_positions(self)
 
 
 def get_around_the_maze_by_the_right(self):
     if self.aberto_direita():
-        self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-        self.lista_de_comandos.append(self.Estados.ANDA1)
+        self.lista_de_comandos += [self.Estados.GIRA_DIREITA, self.Estados.ANDA1]
+
     elif self.aberto_adiante():
-        self.lista_de_comandos.append(self.Estados.ANDA1)
+        self.lista_de_comandos += [self.Estados.ANDA1]
 
     elif self.aberto_esquerda():
-        self.lista_de_comandos.append(self.Estados.GIRA_ESQUERDA)
-        self.lista_de_comandos.append(self.Estados.ANDA1)
+        self.lista_de_comandos += [self.Estados.GIRA_ESQUERDA, self.Estados.ANDA1]
+
     else:
-        self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-        self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-        self.lista_de_comandos.append(self.Estados.ANDA1)
+        self.lista_de_comandos += [self.Estados.GIRA_DIREITA, self.Estados.GIRA_DIREITA, self.Estados.ANDA1]
 
 
-def explore_unknown_position(self):
+def explore_unknown_positions(self):
+    if self.aberto_esquerda() and _is_left_position_unknown(self):
+        self.lista_de_comandos += [self.Estados.GIRA_ESQUERDA, self.Estados.ANDA1]
+        print('*** UNKNOWN LEFT')
 
-    def get_position_index_on_map(position):
+    elif self.aberto_adiante() and _is_front_position_unknown(self):
+        self.lista_de_comandos += [self.Estados.ANDA1]
+        print('*** UNKNOWN FRONT')
+    
+    else:
+        get_around_the_maze_by_the_right(self)
+
+   
+def _is_left_position_unknown(self):
+    direction_to_index = {
+        Direcoes.NORTE: (0,-1),
+        Direcoes.LESTE: (-1,0),
+        Direcoes.SUL: (0,1),
+        Direcoes.OESTE: (1,0),
+    }
+
+    current_position = _get_position_index_on_map(self)
+
+    index = direction_to_index[self.direcao]
+
+    return self.mapa.celulas[current_position[0] + index[0]][current_position[1] + index[1]].desconhecido
+
+def _is_front_position_unknown(self):
+    direction_to_index = {
+        Direcoes.NORTE: (-1,0),
+        Direcoes.LESTE: (0,1),
+        Direcoes.SUL: (1,0),
+        Direcoes.OESTE: (0,-1),
+    }
+
+    current_position = _get_position_index_on_map(self)
+
+    index = direction_to_index[self.direcao]
+
+    return self.mapa.celulas[current_position[0] + index[0]][current_position[1] + index[1]].desconhecido
+
+
+def _get_position_index_on_map(self):
         for i in range(len(self.mapa.celulas)):
             for j in range(len(self.mapa.celulas[0])):
-                if self.mapa.celulas[i][j] == current_position:
+                if self.mapa.celulas[i][j] == self.mapa.celula_atual():
                     return [i, j]
         return None
-
-    def point_unknown_position_around(self):
-        coord = {
-            1: 1,
-            4: 2,
-            3: 3,
-            2: 4
-        }
-
-        direction = [
-            [self.Estados.ANDA1],
-            [self.Estados.GIRA_DIREITA, self.Estados.ANDA1],
-            [self.Estados.GIRA_DIREITA, self.Estados.GIRA_DIREITA, self.Estados.ANDA1],
-            [self.Estados.GIRA_ESQUERDA, self.Estados.ANDA1],
-        ]
-
-        if self.mapa.celulas[position[0], position[1].abert]and self.mapa.celulas[position[0] - 1][position[1]].desconhecido == True:
-            movement = direction[abs(
-                coord[self.direcao.value] - coord[1])]
-
-        elif self.mapa.celulas[position[0]][position[1] + 1].desconhecido == True:
-            movement = direction[abs(
-                coord[self.direcao.value] - coord[4])]
-
-        elif self.mapa.celulas[position[0] + 1][position[1] - 1].desconhecido == True:
-            movement = direction[abs(
-                coord[self.direcao.value] - coord[2])]
-
-        elif self.mapa.celulas[position[0] + 1][position[1]].desconhecido == True:
-            movement = direction[abs(coord[self.direcao.value] - coord[3])]
-
-        else:
-            get_around_the_maze_by_the_right(self)
-
-        self.lista_de_comandos = self.lista_de_comandos + \
-            movement if movement else self.lista_de_comandos
-
-    current_position = self.mapa.celula_atual()
-    position = get_position_index_on_map(current_position)
-
-    point_unknown_position_around(self)
-
-
-def keep_spinning(self):
-    self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-    self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-    self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
-    self.lista_de_comandos.append(self.Estados.GIRA_DIREITA)
