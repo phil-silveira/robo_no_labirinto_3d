@@ -1,4 +1,4 @@
-# :space_invader: Robo no Labirinto
+# Robo no Labirinto :space_invader:
 
 ## Sumários
 
