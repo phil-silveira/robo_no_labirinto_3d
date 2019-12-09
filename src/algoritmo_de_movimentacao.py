@@ -29,26 +29,7 @@ def loop(self):
     '''
 
     if self.estado == self.Estados.PARA:
-        #
-        # State machine
-        #
-        if self.maze_mapping_state == MazeMappingState.IDLE:
-            self.maze_mapping_state = MazeMappingState.GET_AROUND_MAZE_BY_RIGHT
-
-        elif self.maze_mapping_state == MazeMappingState.GET_AROUND_MAZE_BY_RIGHT and self._initial_position == self.mapa.celula_atual():
-            self.maze_mapping_state = MazeMappingState.EXPLORE_UNKONWN_POSITIONS
-
-            print(f'*** {MazeMappingState.GET_AROUND_MAZE_BY_RIGHT.value}(COMPLETED)')
-
-
-        #
-        #  Control
-        # 
-        if self.maze_mapping_state == MazeMappingState.GET_AROUND_MAZE_BY_RIGHT:
-            get_around_the_maze_by_the_right(self)
-
-        elif self.maze_mapping_state == MazeMappingState.EXPLORE_UNKONWN_POSITIONS:
-            explore_unknown_positions(self)
+        explore_unknown_positions(self)
 
 
 def get_around_the_maze_by_the_right(self):
@@ -66,13 +47,18 @@ def get_around_the_maze_by_the_right(self):
 
 
 def explore_unknown_positions(self):
-    if self.aberto_esquerda() and _is_left_position_unknown(self):
-        self.lista_de_comandos += [self.Estados.GIRA_ESQUERDA, self.Estados.ANDA1]
-        print('*** UNKNOWN LEFT')
+    if self.aberto_direita() and _is_right_position_unknown(self):
+        self.lista_de_comandos += [self.Estados.GIRA_DIREITA, self.Estados.ANDA1]
+        print('*** UNKNOWN RIGHT')
 
     elif self.aberto_adiante() and _is_front_position_unknown(self):
         self.lista_de_comandos += [self.Estados.ANDA1]
         print('*** UNKNOWN FRONT')
+
+    elif self.aberto_esquerda() and _is_left_position_unknown(self):
+        self.lista_de_comandos += [self.Estados.GIRA_ESQUERDA, self.Estados.ANDA1]
+        print('*** UNKNOWN LEFT')
+
     
     else:
         get_around_the_maze_by_the_right(self)
@@ -98,6 +84,20 @@ def _is_front_position_unknown(self):
         Direcoes.LESTE: (0,1),
         Direcoes.SUL: (1,0),
         Direcoes.OESTE: (0,-1),
+    }
+
+    current_position = _get_position_index_on_map(self)
+
+    index = direction_to_index[self.direcao]
+
+    return self.mapa.celulas[current_position[0] + index[0]][current_position[1] + index[1]].desconhecido
+
+def _is_right_position_unknown(self):
+    direction_to_index = {
+        Direcoes.NORTE: (0,1),
+        Direcoes.LESTE: (1,0),
+        Direcoes.SUL: (0,-1),
+        Direcoes.OESTE: (-1,0)
     }
 
     current_position = _get_position_index_on_map(self)
